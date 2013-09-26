@@ -1,0 +1,108 @@
+* {
+	box-sizing: border-box;
+	text-align:center;
+}
+.buttons {
+	margin: 10px;
+}
+.submitnewquote, .randomquote {
+	background-color: #eee;
+}
+.quotebox {
+	width: 90%;
+	margin-top: 10px;
+	margin-left:auto;
+	margin-right:auto;
+	border: 1px solid black;
+}
+.author {
+	font-style: italic;
+}
+.quotelist {
+	height: 500px;
+	width: 80%;
+	margin-left:auto;
+	margin-right:auto;
+	border: 1px solid black;
+}
+
+.newlightbox {
+	display:none;
+	background-color: rgba(55, 55, 55, 0.9);
+    position: fixed;
+    z-index: 1;
+    top:0px;
+    left:0px;
+    width:100%;
+    height:100%;
+   	overflow:auto;
+
+}
+.randomlightbox {
+	display:none;
+	background-color: rgba(55, 55, 55, 0.9);
+    position: fixed;
+    z-index: 1;
+    top:0px;
+    left:0px;
+    width:100%;
+    height:100%;
+   	overflow:auto;		
+}
+input, textarea {
+	background-color: white;
+	text-align: left;
+}
+.box {
+	position: fixed;
+	width:535px;
+	height:275px;
+	margin: auto;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+}
+
+.text{
+	padding: 20px;
+	height: 275px;
+	background-color: white;
+	border-radius: 10px;
+}
+
+.close {
+	background:#FF9999;
+	display:block;
+	position: absolute;
+	bottom: 0;
+	right: 10px;
+	margin-bottom:10px;
+	color:white;
+	padding-left: 40px;
+	padding-right: 40px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-radius: 5px;
+}
+
+.rating {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+}
+.rating > span {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+}
+.rating > span:hover,
+.rating > span:hover ~ span {
+  color: transparent;
+}
+.rating > span:hover:before,
+.rating > span:hover ~ span:before {
+   content: "\2605";
+   position: absolute;
+   left:0;
+   color: gold;
+}

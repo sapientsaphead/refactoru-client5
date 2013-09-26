@@ -1,0 +1,62 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="main.css">
+    <title>Inspirational Quotes</title>
+</head>
+
+<body>
+
+    <h1>Inspirational Quotes</h1>
+
+    <div class="buttons">
+    	<button type="button" class="submitnewquote">Submit New Quote</button>
+    </div>
+
+    <div class="buttons">
+    	<button type="button" class="randomquote">Random Quote</button>
+    </div>
+
+    <div class="newlightbox">
+		<div class="box">
+			<div class="text">
+				<h3>Submit New Quote</h3>
+					<form>
+						Author: <input type="text" class="newauthor" name="author"><br>
+						Quote: <textarea class="newquote" rows="4" cols="50"></textarea><br>
+						<button class="submitquote" type="button">Submit</button>
+					</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="randomlightbox">
+		<div class="box">
+			<div class="text">
+				<h3>Random Quote</h3>
+				<div class="author"></div>
+				<div class="quote"></div>
+				<div class="rating">
+					
+					<span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+				</div>
+				
+				<button id="button" class="close">Close</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="quotelist">
+		<div class="quotebox">
+			
+		</div>
+	</div>
+			    
+	<script language="javascript" type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+ 	<script language="javascript" type="text/javascript" src="quotes.js"></script>
+ 	<script language="javascript" type="text/javascript" src="creatable.js"></script>
+
+</body>
+</html>
