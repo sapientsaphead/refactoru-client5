@@ -85,24 +85,38 @@ input, textarea {
 	padding-bottom: 10px;
 	border-radius: 5px;
 }
-
+/* Star rating */
 .rating {
   unicode-bidi: bidi-override;
   direction: rtl;
 }
+/*none of these seem to make a difference*/
 .rating > span {
   display: inline-block;
   position: relative;
   width: 1.1em;
 }
-.rating > span:hover,
+
+.rating > span:hover {
+  color: transparent;
+}
+
 .rating > span:hover ~ span {
   color: transparent;
 }
-.rating > span:hover:before,
+
+.rating > span:hover:before {
+   content: "\2605";
+   position: absolute;
+   left:0;
+   color: gold;
+}
+
 .rating > span:hover ~ span:before {
    content: "\2605";
    position: absolute;
    left:0;
    color: gold;
 }
+
+
