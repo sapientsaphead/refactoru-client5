@@ -43,9 +43,7 @@ $(".submitquote").on("click", function(event) {
 			console.log("id after if", id);
 			console.log("var id", id-1);
 
-			$(".quotelist").prepend("<div class=\"quotebox\" id=\"" + newquotelist[id-1].num + "\"><div class=\"author\"><p>" + author + "</p></div>" 
-			+ "<div class=\"quote\"><p>\"" + quote + "\"</p></div>" 
-			+ "<div class=\"rating\"><span class=\"star\" id=\"5s\">☆</span><span class=\"star\" id=\"4s\">☆</span><span class=\"star\" id=\"3s\">☆</span><span class=\"star\" id=\"2s\">☆</span><span class=\"star\" id=\"1s\">☆</span></div></div>");
+            $(".quotelist").prepend("<div class=\"quotebox\" id=\"" +newquotelist[id-1].num + "\"><div class=\"delqb\">X</div><div class=\"author\"><a href='#' id=\""+newquotelist[id-1].author+"\">" + author+"</a></div>" + "<div class=\"quote\"><p>\"" + quote+"\"</p></div><div class=\"rating\"><span class=\"star\"id=\"5s\">☆</span><span class=\"star\"id=\"4s\">☆</span><span class=\"star\"id=\"3s\">☆</span><span class=\"star\"id=\"2s\">☆</span><span class=\"star\"id=\"1s\">☆</span></div></div>");
 		
 		// Close submit new quote box & empty.
 		$(".newlightbox").css("display","none");
@@ -64,7 +62,6 @@ $(".submitquote").on("click", function(event) {
 		var starrating;
 		var idnum;
 
-
 		$(".star").on("click", function(){
 			starrating = $(this).attr("id");
 			idnum = $(this).parent().parent().attr("id");
@@ -75,10 +72,28 @@ $(".submitquote").on("click", function(event) {
 			$(this).prevAll().css("color", "black");
 			});
 
-			
+		$(".delqb").on("click", function(){
+			$(this).parent().fadeOut("slow");
+			$(".undo:hidden").fadeIn("slow");
 		});
 
+		$(".undo").on("click", function(){
+			$(".quotebox:hidden:first").fadeIn("slow");
+			$(this).fadeOut("slow");
+		});
 
+		$(".ratingSort").on("click", function(){
+			newquotelist.sort(descendingObj);
+			console.log('sorted', newquotelist);
+		});
+
+		// $("a").on("click", function(){
+		// });
+
+
+			
+});
+		
 
 
 // Cancel submit and close new quote lightbox.
