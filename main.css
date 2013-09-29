@@ -168,7 +168,7 @@ input, textarea {
 /*Undo Button*/
 .undo{
 	background-color: azure;
-	color: white;
+	color: black;
 	float: left;
 	left: 10%;
 	top: 180px;

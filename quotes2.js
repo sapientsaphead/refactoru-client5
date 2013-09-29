@@ -101,6 +101,61 @@ $(".submitquote").on("click", function(event) {
 		// Author page filter
 	
 
+		
+
+		$(".back").on("click", function(){
+			$(".mainpage").css("display", "block");
+			$(".authorpage").css("display", "none");
+			
+		});
+
+	});
+
+
+	// Cancel submit and close new quote lightbox.
+			
+	$(".cancel").on("click", function() {
+		$(".newlightbox").css("display","none");
+	});
+
+
+	// Display random quote lightbox.
+
+	$(".randomquote").on("click", function(){
+		$(".randomlightbox").css("display","block");
+		var randomid = Math.floor(Math.random() * (newquotelist.length-1));
+		$(".randomquotebox").prepend("<div id='" + newquotelist[id-1].num + "'class=\"quotebox\"><div class=\"author\">"+ newquotelist[randomid].author +"</div><div class=\"quote\"><p>\"" + newquotelist[randomid].quote +"\"</p></div><div class=\"rating\"><span class=\"star\"id=\"5s\">☆</span><span class=\"star\"id=\"4s\">☆</span><span class=\"star\"id=\"3s\">☆</span><span class=\"star\"id=\"2s\">☆</span><span class=\"star\"id=\"1s\">☆</span></div></div>");
+		
+		if (newquotelist[randomid].rating === undefined) {
+		}
+
+		else {
+			$("#"+newquotelist[randomid].rating).nextAll().andSelf().css("color","gold");
+			$("#"+newquotelist[randomid].rating).prevAll().css("color", "black");
+		};
+
+		$(".star").on("click", function(){
+			var idnum;
+			starrating = $(this).attr("id");
+			idnum = $(this).parent().parent().attr("id");
+			newquotelist[idnum]["rating"] = starrating;
+
+			$(this).nextAll().andSelf().css("color","gold");
+			$(this).prevAll().css("color", "black");
+
+		});
+
+	});
+
+	// Close random quote lightbox.
+
+	$(".close").on("click", function(){
+		$(".randomlightbox").css("display","none")
+		$(".randomquotebox").empty();
+	});
+
+});
+	
 		$(".author").on("click", function(){
 			var authorname = $(this).attr("id");
 			$(".mainpage").css("display", "none");
@@ -145,111 +200,37 @@ $(".submitquote").on("click", function(event) {
 			};
 		});
 
-
-
-
-	// 	$(".ratingSort").on("click", function(){
-	// 		newquotelist.sort(descendingObj);
-
-	// 		$(".quotelist").empty();
-
-	// 		for (var i=0; i < newquotelist.length-1; i++) {
-	// 		$(".quotelist").prepend("<div class=\"quotebox\" id=\"" + newquotelist[i].num + "\"><div class=\"delqb\">X</div><div class=\"author\" id=\"" + newquotelist[i].author + "\">" + newquotelist[i].author + "</div><div class=\"quote\"><p>" + newquotelist[i].quote + "</p></div><div class=\"rating\"><span class=\"star\"id=\"5s\">☆</span><span class=\"star\"id=\"4s\">☆</span><span class=\"star\"id=\"3s\">☆</span><span class=\"star\"id=\"2s\">☆</span><span class=\"star\"id=\"1s\">☆</span></div></div>");
-			
-	// 		if (newquotelist[i].rating === undefined) {
-	// 			}
-
-	// 			else {
-	// 				$("#"+newquotelist[i].rating).nextAll().andSelf().css("color","gold");
-	// 				$("#"+newquotelist[i].rating).prevAll().css("color", "black");
-	// 			};
-	// 		};
-
-	// 			$(".star").on("click", function(){
-	// 				var idnum;
-	// 				starrating = $(this).attr("id");
-	// 				idnum = $(this).parent().parent().attr("id");
-
-	// 				newquotelist[idnum]["rating"] = starrating;
-
-	// 				$(this).nextAll().andSelf().css("color","gold");
-	// 				$(this).prevAll().css("color", "black");
-	// 		});
-
-	// 	});
-		
-
-		$(".back").on("click", function(){
-			$(".mainpage").css("display", "block");
-			$(".authorpage").css("display", "none");
-			
-		});
-
-	});
-
-
-	// Cancel submit and close new quote lightbox.
-			
-	$(".cancel").on("click", function() {
-		$(".newlightbox").css("display","none");
-	});
-
-
-	// Display random quote lightbox.
-
-	$(".randomquote").on("click", function(){
-		$(".randomlightbox").css("display","block");
-		var randomid = Math.floor(Math.random() * (newquotelist.length-1));
-		$(".randomquotebox").prepend("<div id='" + newquotelist[id-1].num + "'class=\"quotebox\"><div class=\"author\">"+ newquotelist[randomid].author +"</div><div class=\"quote\"><p>\"" + newquotelist[randomid].quote +"\"</p></div><div class=\"rating\"><span class=\"star\"id=\"5s\">☆</span><span class=\"star\"id=\"4s\">☆</span><span class=\"star\"id=\"3s\">☆</span><span class=\"star\"id=\"2s\">☆</span><span class=\"star\"id=\"1s\">☆</span></div></div>");
-		
-		if (newquotelist[randomid].rating === undefined) {
-		}
-
-		else {
-			$("#"+newquotelist[randomid].rating).nextAll().andSelf().css("color","gold");
-			$("#"+newquotelist[randomid].rating).prevAll().css("color", "black");
-		};
-
-		$(".star").on("click", function(){
-			var idnum;
-			starrating = $(this).attr("id");
-			idnum = $(this).parent().parent().attr("id");
-			newquotelist[idnum]["rating"] = starrating;
-
-			$(this).nextAll().andSelf().css("color","gold");
-			$(this).prevAll().css("color", "black");
-
-			// $(this).parent().parent().addClass(starrating+"q");
-		});
-
-	});
-
-	// Close random quote lightbox.
-
-	$(".close").on("click", function(){
-		$(".randomlightbox").css("display","none")
-		$(".randomquotebox").empty();
-	});
-
-});
-
 				// Sort by Rating
 		$(".ratingSort").on("click",function(){
-			newquotelist.sort(descendingObj);
+			newquotelist.sort(ascendingObj);
+			console.log('sort', newquotelist);
+			var i = 0;
+			$(".quotebox").each(function(){
+				if(newquotelist
+				i < newquotelist.length -1;
+				$(this).attr('id').toInt();
+				i++;
+			});
+			// for(var i = 0; i < newquotelist.length-1; i++){
+			// 	$(".quotebox").attr("id") = i;
+			// }
 
-			$(".quotelist").empty();
-
-			for (var i=0; i < newquotelist.length-1; i++) {
-			$(".quotelist").prepend("<div class=\"quotebox\" id=\"" + newquotelist[i].num + "\"><div class=\"delqb\">X</div><div class=\"author\" id=\"" + newquotelist[i].author + "\">" + newquotelist[i].author + "</div><div class=\"quote\"><p>" + newquotelist[i].quote + "</p></div><div class=\"rating\"><span class=\"star\"id=\"5s\">☆</span><span class=\"star\"id=\"4s\">☆</span><span class=\"star\"id=\"3s\">☆</span><span class=\"star\"id=\"2s\">☆</span><span class=\"star\"id=\"1s\">☆</span></div></div>");
 			
-			if (newquotelist[i].rating === undefined) {
-				}
+				
+				
+				//("<div class=\"quotebox\" id=\"" + newquotelist[i].num + "\"><div class=\"delqb\">X</div><div class=\"author\" id=\"" + newquotelist[i].author + "\">" + newquotelist[i].author + "</div><div class=\"quote\"><p>" + newquotelist[i].quote + "</p></div><div class=\"rating\"><span class=\"star\"id=\"5s\">☆</span><span class=\"star\"id=\"4s\">☆</span><span class=\"star\"id=\"3s\">☆</span><span class=\"star\"id=\"2s\">☆</span><span class=\"star\"id=\"1s\">☆</span></div></div>");
+				
+				
 
-				else {
-					$("#"+newquotelist[i].rating).nextAll().andSelf().css("color","gold");
-					$("#"+newquotelist[i].rating).prevAll().css("color", "black");
-				};
-			};
+			
+			
+				// if (newquotelist[i].rating === undefined) {
+				// }
+
+				// else {
+				// 	$("#"+newquotelist[i].rating).nextAll().andSelf().css("color","gold");
+				// 	$("#"+newquotelist[i].rating).prevAll().css("color", "black");
+				// };
 
 				$(".star").on("click", function(){
 					var idnum;
