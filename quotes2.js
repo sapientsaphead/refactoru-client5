@@ -4,6 +4,7 @@ $(document).ready(function(){
 
 
 	// Display quote submission lightbox.
+	console.log("before submitnewquote onclick", newquotelist);
 
 	$(".submitnewquote").on("click", function(){
 		$(".newlightbox").css("display","block")
@@ -13,32 +14,36 @@ $(document).ready(function(){
 	// Function to output quote submission into main page.
 
 	var newquote = {};
-	var id = 0;
-	
+	var id =0;
+	console.log("after click, before getquote", newquotelist);
 	var getQuote = function(author, quote, timeStamp) {
+		console.log("inside getQuote, before keyvalues", newquotelist);
 		newquotelist[id] = {
 			num: id,
 			author: author,
 			quote: quote,
 			timeStamp: timeStamp,
 		}
+		//Here is where it adds two objects - the empty one and the actual quote
+		console.log("inside getQuote, above id++", newquotelist);
 		id++;
+		console.log("inside getQuote, after id++", newquotelist);
 	};
 
-console.log("var id outside", id);
-console.log('nql1', newquotelist);
+	console.log("var id outside", id);
+	console.log("before submitquote onclick", newquotelist);
 
-$(".submitquote").on("click", function(event) {
+	$(".submitquote").on("click", function(event) {
 	
-	var author = $(".newauthor").val();
-	var quote = $(".newquote").val();
-	var timeStamp = new Date();
-	var starrating;
-	var filteredObjects;
-	var parentId;
+		var author = $(".newauthor").val();
+		var quote = $(".newquote").val();
+		var timeStamp = new Date();
+		var starrating;
+		var filteredObjects;
+		var parentId;
 
-	console.log("before if newquotelist", newquotelist);
-	console.log("id before if", id);
+		console.log("before if newquotelist", newquotelist);
+		console.log("id before if", id);
 
 		if(author && quote) {
 			getQuote(author, quote, timeStamp);
@@ -48,10 +53,10 @@ $(".submitquote").on("click", function(event) {
 
             $(".quotelist").prepend("<div class=\"quotebox\" id=\"" +newquotelist[id-1].num + "\"><div class=\"delqb\">X</div><div class=\"author\" id=\"" + newquotelist[id-1].author + "\">" + author + "</div>" + "<div class=\"quote\"><p>\"" + quote+"\"</p></div><div class=\"rating\"><span class=\"star\"id=\"5s\">☆</span><span class=\"star\"id=\"4s\">☆</span><span class=\"star\"id=\"3s\">☆</span><span class=\"star\"id=\"2s\">☆</span><span class=\"star\"id=\"1s\">☆</span></div></div>");
 		
-		// Close submit new quote box & empty.
-		$(".newlightbox").css("display","none");
-		$(".newauthor").val("");
-		$(".newquote").val("");
+			// Close submit new quote box & empty.
+			$(".newlightbox").css("display","none");
+			$(".newauthor").val("");
+			$(".newquote").val("");
 
 		}
 		// Alert plus keep box open.
@@ -99,9 +104,6 @@ $(".submitquote").on("click", function(event) {
 		});
 
 		// Author page filter
-	
-
-		
 
 		$(".back").on("click", function(){
 			$(".mainpage").css("display", "block");
@@ -156,61 +158,62 @@ $(".submitquote").on("click", function(event) {
 
 });
 	
-		$(".author").on("click", function(){
-			var authorname = $(this).attr("id");
-			$(".mainpage").css("display", "none");
-			$(".authorpage").css("display", "block");
-			$(".bigauthortitle").text("Quotes by "+ authorname);
-			$(".authorquotelist").text("");
+	$(".author").on("click", function(){
+		var authorname = $(this).attr("id");
+		$(".mainpage").css("display", "none");
+		$(".authorpage").css("display", "block");
+		$(".bigauthortitle").text("Quotes by "+ authorname);
+		$(".authorquotelist").text("");
 
-			filteredObjects = filter(newquotelist, function(o) {
-	  			if(o.author === authorname) {
-	    		return true;
-	  			}
-	  			else {
-	    		return false;
-	  			}
-	  		});
+		filteredObjects = filter(newquotelist, function(o) {
+	  		if(o.author === authorname) {
+	    	return true;
+	  		}
+	  		else {
+	    	return false;
+	  		}
+	  	});
 		
-			for (var j=0; j < filteredObjects.length; j++) {
+		for (var j=0; j < filteredObjects.length; j++) {
 				
-				$(".authorquotelist").prepend("<div class=\"quotebox\" id='" + filteredObjects[j].num + "'><div class=\"author\">" + filteredObjects[j].author + "</div><div class=\"quote\"><p>\"" + filteredObjects[j].quote + "\"</p></div><div class=\"rating\"><span class=\"star\"id=\"5s\">☆</span><span class=\"star\"id=\"4s\">☆</span><span class=\"star\"id=\"3s\">☆</span><span class=\"star\"id=\"2s\">☆</span><span class=\"star\"id=\"1s\">☆</span></div></div>");
-				
-				if (filteredObjects[j].rating === undefined) {
+			$(".authorquotelist").prepend("<div class=\"quotebox\" id='" + filteredObjects[j].num + "'><div class=\"author\">" + filteredObjects[j].author + "</div><div class=\"quote\"><p>\"" + filteredObjects[j].quote + "\"</p></div><div class=\"rating\"><span class=\"star\"id=\"5s\">☆</span><span class=\"star\"id=\"4s\">☆</span><span class=\"star\"id=\"3s\">☆</span><span class=\"star\"id=\"2s\">☆</span><span class=\"star\"id=\"1s\">☆</span></div></div>");
+					
+			if (filteredObjects[j].rating === undefined) {
+			}
 
-				}
-
-				else {
-					$("#"+filteredObjects[j].rating).nextAll().andSelf().css("color","gold");
-					$("#"+filteredObjects[j].rating).prevAll().css("color", "black");
-				};
-
-				$(".star").on("click", function(){
-					var idnum;
-					starrating = $(this).attr("id");
-					idnum = $(this).parent().parent().attr("id");
-					console.log("idnum", idnum)
-					filteredObjects[idnum]["rating"] = starrating;
-
-					$(this).nextAll().andSelf().css("color","gold");
-					$(this).prevAll().css("color", "black");
-
-				});
-			
+			else {
+				$("#"+filteredObjects[j].rating).nextAll().andSelf().css("color","gold");
+				$("#"+filteredObjects[j].rating).prevAll().css("color", "black");
 			};
+
+			$(".star").on("click", function(){
+				var idnum;
+				starrating = $(this).attr("id");
+				idnum = $(this).parent().parent().attr("id");
+				console.log("idnum", idnum)
+				filteredObjects[idnum]["rating"] = starrating;
+
+				$(this).nextAll().andSelf().css("color","gold");
+				$(this).prevAll().css("color", "black");
+			});
+			
+		};
+		
 		});
 
-				// Sort by Rating
+		// Sort by Rating
+
 		$(".ratingSort").on("click",function(){
 			newquotelist.sort(ascendingObj);
-			console.log('sort', newquotelist);
-			var i = 0;
-			$(".quotebox").each(function(){
-				if(newquotelist
-				i < newquotelist.length -1;
-				$(this).attr('id').toInt();
-				i++;
+			// console.log('sort', newquotelist);
+			// var i = 0;
+
+			$.each(newquotelist, function () {
+				newquotelist.sort(ascendingObj);
+
 			});
+
+			console.log("newquotelist sorted", newquotelist)
 			// for(var i = 0; i < newquotelist.length-1; i++){
 			// 	$(".quotebox").attr("id") = i;
 			// }

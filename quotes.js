@@ -25,35 +25,28 @@ $(document).ready(function(){
 		id++;
 	};
 
-console.log("var id outside", id);
-console.log('nql1', newquotelist);
 
-$(".submitquote").on("click", function(event) {
+	$(".submitquote").on("click", function(event) {
 	
-	var author = $(".newauthor").val();
-	var quote = $(".newquote").val();
-	var timeStamp = new Date();
-	var starrating;
-	var filteredObjects;
-	var parentId;
-
-	console.log("before if newquotelist", newquotelist);
-	console.log("id before if", id);
+		var author = $(".newauthor").val();
+		var quote = $(".newquote").val();
+		var timeStamp = new Date();
+		var starrating;
+		var filteredObjects;
+		var parentId;
 
 		if(author && quote) {
 			getQuote(author, quote, timeStamp);
-			console.log("after if newquotelist", newquotelist);
-			console.log("id after if", id);
-			console.log("var id", id-1);
 
             $(".quotelist").prepend("<div class=\"quotebox\" id=\"" +newquotelist[id-1].num + "\"><div class=\"delqb\">X</div><div class=\"author\" id=\"" + newquotelist[id-1].author + "\">" + author + "</div>" + "<div class=\"quote\"><p>\"" + quote+"\"</p></div><div class=\"rating\"><span class=\"star\"id=\"5s\">☆</span><span class=\"star\"id=\"4s\">☆</span><span class=\"star\"id=\"3s\">☆</span><span class=\"star\"id=\"2s\">☆</span><span class=\"star\"id=\"1s\">☆</span></div></div>");
 		
-		// Close submit new quote box & empty.
-		$(".newlightbox").css("display","none");
-		$(".newauthor").val("");
-		$(".newquote").val("");
+			// Close submit new quote box & empty.
+			$(".newlightbox").css("display","none");
+			$(".newauthor").val("");
+			$(".newquote").val("");
 
 		}
+
 		// Alert plus keep box open.
 		else {
 			alert("Please fill out the form completely!")
@@ -76,32 +69,25 @@ $(".submitquote").on("click", function(event) {
 		
 		// Delete quotes and undo delete quotes.
 
-		// Consider arrays for multiple undos.
-
 		var getparentId = function(id) {
 			return id;
-			console.log("attr id", parentId)
 		};
 
-		$(".delqb").on("click", function(){
+		$(".quotelist").on("click", ".delqb", function(){
 			$(this).parent().fadeOut("slow");
 			parentId = $(this).parent().attr("id");
 			$(".undo:hidden").fadeIn("slow");
 			getparentId(parentId);
-			console.log("parentId inside",parentId);
 		});
 
-		console.log("parentId outside",parentId);
 
-		$(".undo").on("click", function(){
+		$(".mainpage").on("click",".undo", function(){
 			$("#"+parentId).fadeIn("slow");
-			//$(this).fadeOut("slow");
 		});
 
 		// Author page filter
 	
-
-		$(".author").on("click", function(){
+		$(".quotelist").on("click", ".author",function(){
 			var authorname = $(this).attr("id");
 			$(".mainpage").css("display", "none");
 			$(".authorpage").css("display", "block");
@@ -119,10 +105,9 @@ $(".submitquote").on("click", function(event) {
 		
 			for (var j=0; j < filteredObjects.length; j++) {
 				
-				$(".authorquotelist").prepend("<div class=\"quotebox\" id='" + filteredObjects[j].num + "'><div class=\"author\">" + filteredObjects[j].author + "</div><div class=\"quote\"><p>\"" + filteredObjects[j].quote + "\"</p></div><div class=\"rating\"><span class=\"star\"id=\"5s\">☆</span><span class=\"star\"id=\"4s\">☆</span><span class=\"star\"id=\"3s\">☆</span><span class=\"star\"id=\"2s\">☆</span><span class=\"star\"id=\"1s\">☆</span></div></div>");
+				$(".authorquotelist").prepend("<div class=\"quotebox\" id='" + filteredObjects[j].num + "'><div class=\"author\">" + filteredObjects[j].author + "</div><div class=\"quote\"><p>\"" + filteredObjects[j].quote + "\"</p></div></div>");
 				
 				if (filteredObjects[j].rating === undefined) {
-
 				}
 
 				else {
@@ -134,49 +119,14 @@ $(".submitquote").on("click", function(event) {
 					var idnum;
 					starrating = $(this).attr("id");
 					idnum = $(this).parent().parent().attr("id");
-					console.log("idnum", idnum)
 					filteredObjects[idnum]["rating"] = starrating;
 
 					$(this).nextAll().andSelf().css("color","gold");
 					$(this).prevAll().css("color", "black");
 
 				});
-			
 			};
 		});
-
-
-
-
-	// 	$(".ratingSort").on("click", function(){
-	// 		newquotelist.sort(descendingObj);
-
-	// 		$(".quotelist").empty();
-
-	// 		for (var i=0; i < newquotelist.length-1; i++) {
-	// 		$(".quotelist").prepend("<div class=\"quotebox\" id=\"" + newquotelist[i].num + "\"><div class=\"delqb\">X</div><div class=\"author\" id=\"" + newquotelist[i].author + "\">" + newquotelist[i].author + "</div><div class=\"quote\"><p>" + newquotelist[i].quote + "</p></div><div class=\"rating\"><span class=\"star\"id=\"5s\">☆</span><span class=\"star\"id=\"4s\">☆</span><span class=\"star\"id=\"3s\">☆</span><span class=\"star\"id=\"2s\">☆</span><span class=\"star\"id=\"1s\">☆</span></div></div>");
-			
-	// 		if (newquotelist[i].rating === undefined) {
-	// 			}
-
-	// 			else {
-	// 				$("#"+newquotelist[i].rating).nextAll().andSelf().css("color","gold");
-	// 				$("#"+newquotelist[i].rating).prevAll().css("color", "black");
-	// 			};
-	// 		};
-
-	// 			$(".star").on("click", function(){
-	// 				var idnum;
-	// 				starrating = $(this).attr("id");
-	// 				idnum = $(this).parent().parent().attr("id");
-
-	// 				newquotelist[idnum]["rating"] = starrating;
-
-	// 				$(this).nextAll().andSelf().css("color","gold");
-	// 				$(this).prevAll().css("color", "black");
-	// 		});
-
-	// 	});
 		
 
 		$(".back").on("click", function(){
@@ -231,35 +181,36 @@ $(".submitquote").on("click", function(event) {
 		$(".randomquotebox").empty();
 	});
 
-});
 
-				// Sort by Rating
-		$(".ratingSort").on("click",function(){
-			newquotelist.sort(descendingObj);
 
-			$(".quotelist").empty();
+	// Sort by Rating
+	$(".ratingSort").on("click",function(){
+		newquotelist.sort(descendingObj);
 
-			for (var i=0; i < newquotelist.length-1; i++) {
-			$(".quotelist").prepend("<div class=\"quotebox\" id=\"" + newquotelist[i].num + "\"><div class=\"delqb\">X</div><div class=\"author\" id=\"" + newquotelist[i].author + "\">" + newquotelist[i].author + "</div><div class=\"quote\"><p>" + newquotelist[i].quote + "</p></div><div class=\"rating\"><span class=\"star\"id=\"5s\">☆</span><span class=\"star\"id=\"4s\">☆</span><span class=\"star\"id=\"3s\">☆</span><span class=\"star\"id=\"2s\">☆</span><span class=\"star\"id=\"1s\">☆</span></div></div>");
-			
+		$(".quotelist").empty();
+
+		for (var i=0; i < newquotelist.length-1; i++) {
+		$(".quotelist").prepend("<div class=\"quotebox\" id=\"" + newquotelist[i].num + "\"><div class=\"delqb\">X</div><div class=\"author\" id=\"" + newquotelist[i].author + "\">" + newquotelist[i].author + "</div><div class=\"quote\"><p>" + newquotelist[i].quote + "</p></div><div class=\"rating\"><span class=\"star\"id=\"5s\">☆</span><span class=\"star\"id=\"4s\">☆</span><span class=\"star\"id=\"3s\">☆</span><span class=\"star\"id=\"2s\">☆</span><span class=\"star\"id=\"1s\">☆</span></div></div>");
+		
 			if (newquotelist[i].rating === undefined) {
-				}
+			}
 
-				else {
-					$("#"+newquotelist[i].rating).nextAll().andSelf().css("color","gold");
-					$("#"+newquotelist[i].rating).prevAll().css("color", "black");
-				};
+			else {
+				$("#"+newquotelist[i].rating).nextAll().andSelf().css("color","gold");
+				$("#"+newquotelist[i].rating).prevAll().css("color", "black");
 			};
+		};
 
-				$(".star").on("click", function(){
-					var idnum;
-					starrating = $(this).attr("id");
-					idnum = $(this).parent().parent().attr("id");
+			$(".star").on("click", function(){
+				var idnum;
+				starrating = $(this).attr("id");
+				idnum = $(this).parent().parent().attr("id");
 
-					newquotelist[idnum]["rating"] = starrating;
+				newquotelist[idnum]["rating"] = starrating;
 
-					$(this).nextAll().andSelf().css("color","gold");
-					$(this).prevAll().css("color", "black");
+				$(this).nextAll().andSelf().css("color","gold");
+				$(this).prevAll().css("color", "black");
 			});
 
-		});		
+	});		
+});
