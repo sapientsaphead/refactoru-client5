@@ -7,8 +7,7 @@ $(document).ready(function(){
 	// Display quote submission lightbox.
 
 	$(".submitnewquote").on("click", function(){
-		$(".newlightbox").css("display","block")
-
+		$(".newlightbox").css("display","block");
 	});
 
 	// Function to output quote submission into main page.
@@ -24,7 +23,7 @@ $(document).ready(function(){
 			author: author,
 			quote: quote,
 			timeStamp: timeStamp,
-		}
+		};
 		console.log('2id',id);
 		//Here is where it adds two objects - the empty one and the actual quote
 		console.log('3id',id);
@@ -35,8 +34,9 @@ $(document).ready(function(){
 	// Prepopulating DOM with LocalStorage
 
 	// for(var k=0; k<localStorage.length; k++){
-	// 	$(".quotelist").prepend("<div class=\"quotebox\" id=\"" +JSON.parse(localStorage[k]) + "\"><div class=\"delqb\">X</div><div class=\"author\" id=\"" + localStorage[k].author + "\">" + localStorage[k].author + "</div>" + "<div class=\"quote\"><p>\"" + localStorage[k].quote+"\"</p></div><div class=\"rating\"><span class=\"star\"id=\"5s\">☆</span><span class=\"star\"id=\"4s\">☆</span><span class=\"star\"id=\"3s\">☆</span><span class=\"star\"id=\"2s\">☆</span><span class=\"star\"id=\"1s\">☆</span></div></div>");
+	// $(".quotelist").prepend("<div class=\"quotebox\" id=\"" +JSON.parse(localStorage[k]) + "\"><div class=\"delqb\">X</div><div class=\"author\" id=\"" + localStorage[k].author + "\">" + localStorage[k].author + "</div>" + "<div class=\"quote\"><p>\"" + localStorage[k].quote+"\"</p></div><div class=\"rating\"><span class=\"star\"id=\"5s\">☆</span><span class=\"star\"id=\"4s\">☆</span><span class=\"star\"id=\"3s\">☆</span><span class=\"star\"id=\"2s\">☆</span><span class=\"star\"id=\"1s\">☆</span></div></div>");
 	// };
+
 	var newLocalStorage = [];
 
 	for(var l = 0; l < localStorage.length; l++){
@@ -78,12 +78,20 @@ $(document).ready(function(){
 
 		// Alert plus keep box open.
 		else {
-			alert("Please fill out the form completely!")
+			alert("Please fill out the form completely!");
 		}
 		newquotelist.push(newquote);
+
+
+
+		if(newquotelist[id+1].num === undefined){
+			newquotelist.pop();
+			}
+
+		console.log('nql', newquotelist);
 		// localStorage.o = JSON.stringify(newquotelist);
 		localStorage[lid] = JSON.stringify(newquotelist[id]);
-		lid++
+		lid++;
 	
 		// Add star rating for each quote to object.
 		// Add star rating as quotebox id for sorting.
@@ -127,13 +135,13 @@ $(document).ready(function(){
 			$(".authorquotelist").text("");
 
 			filteredObjects = filter(newquotelist, function(o) {
-	  			if(o.author === authorname) {
-	    		return true;
-	  			}
-	  			else {
-	    		return false;
-	  			}
-	  		});
+				if(o.author === authorname) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			});
 		
 			for (var j=0; j < filteredObjects.length; j++) {
 				
@@ -145,7 +153,7 @@ $(document).ready(function(){
 				else {
 					$("#"+filteredObjects[j].rating).nextAll().andSelf().css("color","gold");
 					$("#"+filteredObjects[j].rating).prevAll().css("color", "black");
-				};
+				}
 
 				$(".star").on("click", function(){
 					var idnum;
@@ -157,9 +165,9 @@ $(document).ready(function(){
 					$(this).prevAll().css("color", "black");
 
 				});
-			};
+			}
 		});
-		
+	
 
 		$(".back").on("click", function(){
 			$(".mainpage").css("display", "block");
@@ -182,7 +190,7 @@ $(document).ready(function(){
 	$(".randomquote").on("click", function(){
 		$(".randomlightbox").css("display","block");
 		var randomid = Math.floor(Math.random() * (newquotelist.length));
-		$(".randomquotebox").prepend("<div id='" + newquotelist[id].num + "'class=\"quotebox\"><div class=\"author\">"+ newquotelist[randomid].author +"</div><div class=\"quote\"><p>\"" + newquotelist[randomid].quote +"\"</p></div><div class=\"rating\"><span class=\"star\"id=\"5s\">☆</span><span class=\"star\"id=\"4s\">☆</span><span class=\"star\"id=\"3s\">☆</span><span class=\"star\"id=\"2s\">☆</span><span class=\"star\"id=\"1s\">☆</span></div></div>");
+		$(".randomquotebox").prepend("<div id='" + newquotelist[id-1].num + "'class=\"quotebox\"><div class=\"author\">"+ newquotelist[randomid].author +"</div><div class=\"quote\"><p>\"" + newquotelist[randomid].quote +"\"</p></div><div class=\"rating\"><span class=\"star\"id=\"5s\">☆</span><span class=\"star\"id=\"4s\">☆</span><span class=\"star\"id=\"3s\">☆</span><span class=\"star\"id=\"2s\">☆</span><span class=\"star\"id=\"1s\">☆</span></div></div>");
 		
 		if (newquotelist[randomid].rating === undefined) {
 		}
@@ -190,7 +198,7 @@ $(document).ready(function(){
 		else {
 			$("#"+newquotelist[randomid].rating).nextAll().andSelf().css("color","gold");
 			$("#"+newquotelist[randomid].rating).prevAll().css("color", "black");
-		};
+		}
 
 		$(".quotelist").on("click", ".star", function(){
 			var idnum;
@@ -209,7 +217,7 @@ $(document).ready(function(){
 	// Close random quote lightbox.
 
 	$(".close").on("click", function(){
-		$(".randomlightbox").css("display","none")
+		$(".randomlightbox").css("display","none");
 		$(".randomquotebox").empty();
 	});
 
@@ -230,8 +238,8 @@ $(document).ready(function(){
 			else {
 				$("#"+newquotelist[i].rating).nextAll().andSelf().css("color","gold");
 				$("#"+newquotelist[i].rating).prevAll().css("color", "black");
-			};
-		};
+			}
+		}
 
 			$(".star").on("click", function(){
 				var idnum;
@@ -243,6 +251,5 @@ $(document).ready(function(){
 				$(this).nextAll().andSelf().css("color","gold");
 				$(this).prevAll().css("color", "black");
 			});
-
-	});		
+		});
 });
