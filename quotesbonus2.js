@@ -16,7 +16,7 @@ $(document).ready(function(){
 	var newquote = {};
 	var id = 0;
 	var lid = localStorage.length;
-	console.log('1id',id);
+	
 	var getQuote = function(author, quote, timeStamp) {
 
 		newquotelist[id] = {
@@ -25,9 +25,9 @@ $(document).ready(function(){
 			quote: quote,
 			timeStamp: timeStamp,
 		}
-		console.log('2id',id);
+
 		//Here is where it adds two objects - the empty one and the actual quote
-		console.log('3id',id);
+		id++;
 	
 	};
 
@@ -50,30 +50,27 @@ $(document).ready(function(){
 
 	$(".submitquote").on("click", function(event) {
 	
-		console.log('4id',id);
 		var author = $(".newauthor").val();
 		var quote = $(".newquote").val();
 		var timeStamp = new Date();
 		var starrating;
 		var filteredObjects;
 		var parentId;
-		console.log(newquotelist[id]);
 
 		if(author && quote) {
 			console.log("before function call", newquotelist);
 
 			getQuote(author, quote, timeStamp);
-			
+
 			console.log("before function call", newquotelist);
-			console.log('5id',id);
 
             $(".quotelist").prepend("<div class=\"quotebox\" id=\"" +newquotelist[id].num + "\"><div class=\"delqb\">X</div><div class=\"author\" id=\"" + newquotelist[id].author + "\">" + author + "</div>" + "<div class=\"quote\"><p>\"" + quote+"\"</p></div><div class=\"rating\"><span class=\"star\"id=\"5s\">☆</span><span class=\"star\"id=\"4s\">☆</span><span class=\"star\"id=\"3s\">☆</span><span class=\"star\"id=\"2s\">☆</span><span class=\"star\"id=\"1s\">☆</span></div></div>");
-			
+		
 			// Close submit new quote box & empty.
 			$(".newlightbox").css("display","none");
 			$(".newauthor").val("");
 			$(".newquote").val("");
-			console.log('6id',id);
+
 		}
 
 		// Alert plus keep box open.
@@ -84,10 +81,9 @@ $(document).ready(function(){
 		// localStorage.o = JSON.stringify(newquotelist);
 		localStorage[lid] = JSON.stringify(newquotelist[id]);
 		lid++
-	
 		// Add star rating for each quote to object.
 		// Add star rating as quotebox id for sorting.
-		console.log('7id',id);
+
 		$(".quotelist").on("click", ".star", function(){
 			var idnum;
 			starrating = $(this).attr("id");
@@ -166,8 +162,8 @@ $(document).ready(function(){
 			$(".authorpage").css("display", "none");
 			
 		});
-			id++;
-	});
+
+	}); // end of submit
 
 
 	// Cancel submit and close new quote lightbox.
@@ -246,3 +242,4 @@ $(document).ready(function(){
 
 	});		
 });
+
